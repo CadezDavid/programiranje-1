@@ -1,3 +1,5 @@
+import re
+
 ###############################################################################
 # Hvaležni medved
 #
@@ -26,6 +28,12 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # {'izdere', 'debel', 'oddide', 'začudeno'}
 ###############################################################################
 
+def find_words(text, niz):
+    pattern = re.compile(r'\b\w*' + niz + r'\w*\b')
+    m1 = re.match(pattern, text)
+    m2 = re.findall(pattern, text)
+    m3 = re.search(pattern, text)
+    return m1, m2, m3
 
 ###############################################################################
 # 2) Sestavite funkcijo [find_prefix], ki vrne množico vseh besed, ki se
@@ -52,3 +60,9 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> double_letters('A volunteer is worth twenty pressed men.')
 # {'volunteer', 'pressed'}
 ###############################################################################
+
+def double_letters(text):
+    pattern = re.compile(r'\b\w*(\w)\1\w*\b')
+    return {m.group(0) for m in re.finditer(pattern, text)}
+
+test = double_letters('A volunteer is worth twenty pressed men.')

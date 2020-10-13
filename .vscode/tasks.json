@@ -8,14 +8,8 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "windows": {
-                "command": "python -i \\\"${file}\\\""
-                },
             "linux": {
-                "command": "python -i \"${file}\""
-            },
-            "osx": {
-                "command": "python -i \"${file}\""
+                "command": "python3 -i \"${file}\""
             }
         },
         {
@@ -25,13 +19,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "windows": {
-                "command": "ocaml -init \\\"${file}\\\""
-                },
             "linux": {
-                "command": "ocaml -init \"${file}\""
-            },
-            "osx": {
                 "command": "ocaml -init \"${file}\""
             }
         }

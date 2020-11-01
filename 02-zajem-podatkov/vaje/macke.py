@@ -1,5 +1,6 @@
 import csv
 import os
+import requests
 
 ###############################################################################
 # Najprej definirajmo nekaj pomožnih orodij za pridobivanje podatkov s spleta.
@@ -8,11 +9,11 @@ import os
 # definiratje URL glavne strani bolhe za oglase z mačkami
 cats_frontpage_url = 'http://www.bolha.com/zivali/male-zivali/macke/'
 # mapa, v katero bomo shranili podatke
-cat_directory = 'TODO'
+cat_directory = '/home/david/FMF/PROG1/programiranje-1/02-zajem-podatkov/vaje'
 # ime datoteke v katero bomo shranili glavno stran
-frontpage_filename = 'TODO'
+frontpage_filename = 'bolha_frontpage.html'
 # ime CSV datoteke v katero bomo shranili podatke
-csv_filename = 'TODO'
+csv_filename = 'macke_podatki.csv'
 
 
 def download_url_to_string(url):
@@ -21,13 +22,15 @@ def download_url_to_string(url):
     """
     try:
         # del kode, ki morda sproži napako
-        page_content = 'TODO'
+        r = requests.get(url)
+        page_content = r.text
     except 'TODO':
         # koda, ki se izvede pri napaki
         # dovolj je če izpišemo opozorilo in prekinemo izvajanje funkcije
-        raise NotImplementedError()
+        print(f'Neuspešen dostop do {url}.')
+        return None
     # nadaljujemo s kodo če ni prišlo do napake
-    raise NotImplementedError()
+    return page_content
 
 
 def save_string_to_file(text, directory, filename):
@@ -37,6 +40,7 @@ def save_string_to_file(text, directory, filename):
     """
     os.makedirs(directory, exist_ok=True)
     path = os.path.join(directory, filename)
+    #path je sedaj polno ime datoteke
     with open(path, 'w', encoding='utf-8') as file_out:
         file_out.write(text)
     return None
@@ -154,7 +158,8 @@ def main(redownload=True, reparse=True):
     # celotna spletna stran ob vsakem zagon prense (četudi že obstaja)
     # in enako za pretvorbo
 
-    raise NotImplementedError()
+    print('Treba je še implementirati funkcijo main')
+    # raise NotImplementedError()
 
 
 if __name__ == '__main__':

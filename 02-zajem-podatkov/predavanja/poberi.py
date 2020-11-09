@@ -1,7 +1,7 @@
 import re
 import requests
 
-STEVILO_STRANI = 2
+STEVILO_STRANI = 20
 STEVILO_FILMOV_NA_STRAN = 50
 
 def nalozi_stran(url):

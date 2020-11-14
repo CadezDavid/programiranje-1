@@ -20,7 +20,7 @@
                 "isDefault": true
             },
             "linux": {
-                "command": "ocaml -init ${file}"
+                "command": "utop -init \"${file}\""
             }
         }
     ]

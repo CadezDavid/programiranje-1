@@ -4,7 +4,11 @@
 Namig: Definirajte pomožno funkcijo za obračanje seznamov.
 [*----------------------------------------------------------------------------*)
 
-let rec reverse = ()
+let rec reverse list =
+  match list with
+  | [] -> []
+  | glava :: [] -> [glava]
+  | glava :: rep -> (reverse rep) @ [glava]
 
 (*----------------------------------------------------------------------------*]
  Funkcija [repeat x n] vrne seznam [n] ponovitev vrednosti [x]. Za neprimerne
@@ -16,7 +20,14 @@ let rec reverse = ()
  - : string list = []
 [*----------------------------------------------------------------------------*)
 
-let rec repeat = ()
+let rec repeat char k =
+  match k with
+  | 0 -> []
+  | _ ->
+    if k < 0
+      then []
+    else
+      char :: repeat char (k - 1)
 
 (*----------------------------------------------------------------------------*]
  Funkcija [range] sprejme število in vrne seznam vseh celih števil od 0 do

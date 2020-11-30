@@ -15,7 +15,7 @@ try
   (* Izračunamo psevdonaključno število v danih mejah *)
   let izmisljeno_stevilo = 1 + Random.int meja in
   print_endline ("Izmislil sem si število med 1 in " ^ string_of_int meja);
-
+temr
   let preberi_stevilo () =
     let poskus = read_int () in
     if poskus < 0 then

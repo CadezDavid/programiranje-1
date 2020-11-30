@@ -18,6 +18,10 @@ let rec reverse list =
   in
   aux [] list
 
+let rec potato = function
+ | [] -> 42
+ | x :: xs -> potato xs
+
 (*----------------------------------------------------------------------------*]
  Funkcija [repeat x n] vrne seznam [n] ponovitev vrednosti [x]. Za neprimerne
  vrednosti [n] funkcija vrne prazen seznam.

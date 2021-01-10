@@ -1,6 +1,8 @@
 (*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*]
- DODATNE VAJE 
+ DODATNE VAJE
 [*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*)
+
+type 'a tree = Empty | Node of 'a tree * 'a * 'a tree
 
 (*----------------------------------------------------------------------------*]
  Funkcija [bst_of_list] iz seznama naredi dvojiško iskalno drevo.
@@ -9,6 +11,15 @@
  - : bool = true
 [*----------------------------------------------------------------------------*)
 
+let leaf a = Node (Empty, a, Empty)
+
+let rec insert a = function
+  | Empty -> leaf a
+  | Node (l, x, d) when x = a -> Node (l, x, d)
+  | Node (l, x, d) when a < x -> Node (insert a l, x, d)
+  | Node (l, x, d) -> Node (l, x, insert a d)
+
+let rec bst_of_list list = List.fold_right insert list Empty
 
 (*----------------------------------------------------------------------------*]
  Funkcija [tree_sort] uredi seznam s pomočjo pretvorbe v bst in nato nazaj
@@ -20,10 +31,21 @@
  - : string list = ["a"; "b"; "c"; "d"; "e"; "f"]
 [*----------------------------------------------------------------------------*)
 
+let rec list_of_bst tree =
+  let rec aux acc to_do tree =
+    match to_do, tree with
+    | [], Empty -> acc
+    | x :: xs, Empty -> aux acc xs x
+    | _, Node (l, x, Empty) -> aux (x :: acc) to_do l
+    | _, Node (l, x, d) -> aux acc (Node (l, x, Empty) :: to_do) d
+  in
+  aux [] [] tree
+
+let rec tree_sort list = list |> bst_of_list |> list_of_bst
 
 (*----------------------------------------------------------------------------*]
  Funkcija [follow directions tree] tipa [direction list -> 'a tree -> 'a option]
- sprejme seznam navodil za premikanje po drevesu in vrne vozlišče do katerega 
+ sprejme seznam navodil za premikanje po drevesu in vrne vozlišče do katerega
  vodi podana pot. Ker navodila morda ne vodijo do nobenega vozlišča v drevesu
  vrne rezultat kot [option] tip. Ne pozabite definirati tipa [directions].
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -38,7 +60,7 @@
  Funkcija [prune directions tree] poišče vozlišče v drevesu glede na navodila,
  ter izbriše poddrevo, ki se začne v izbranem vozlišču.
 
- Opozorilo: Pri uporabi [Some Node(l, x, r)] se OCaml pritoži, saj to razume 
+ Opozorilo: Pri uporabi [Some Node(l, x, r)] se OCaml pritoži, saj to razume
  kot [(Some Node)(l, x, r)], zato pravilno postavite potrebne oklepaje.
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  # prune [Right] test_tree;;
@@ -62,7 +84,7 @@
 (*----------------------------------------------------------------------------*]
  Funkcija [phantomize] tipa ['a tree -> 'a phantom_tree] navadnemu drevesu
  priredi ekvivalentno fantomsko drevo.
- Funkcija [kill x ptree] izbriše element [x] v fantomskem drevesu tako, da 
+ Funkcija [kill x ptree] izbriše element [x] v fantomskem drevesu tako, da
  njegovo stanje nastavi na [Ghost].
  Predpostavite lahko, da v drevesu ni ponovitev elementov.
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -81,7 +103,7 @@
 
 
 (*----------------------------------------------------------------------------*]
- Funkcija [unphantomize] tipa ['a phantom_tree -> 'a tree] fantomskemu drevesu 
+ Funkcija [unphantomize] tipa ['a phantom_tree -> 'a tree] fantomskemu drevesu
  priredi navadno drevo, ki vsebuje zgolj vozlišča, ki še obstajajo. Vrstni red
  vozlišč v končnem drevesu ni pomemben.
 
